@@ -1,7 +1,8 @@
 package com.cams.todo.services.impl;
 
-import com.cams.todo.dtos.TodoDto;
-import com.cams.todo.entities.TodoEntity;
+import com.cams.todo.dtos.TodoCreateRequest;
+import com.cams.todo.dtos.TodoResponse;
+import com.cams.todo.entities.Todo;
 import com.cams.todo.mappers.TodoMapper;
 import com.cams.todo.repositories.TodoRepository;
 import com.cams.todo.services.TodoService;
@@ -18,22 +19,22 @@ public class TodoServiceImpl implements TodoService {
     private final TodoRepository todoRepository;
 
     @Override
-    public TodoDto createTask(TodoDto taskDto){
-        TodoEntity entity = todoMapper.toEntity(taskDto);
-        TodoEntity saved = todoRepository.save(entity);
-        return todoMapper.toDto(saved);
+    public TodoResponse createTodo(TodoCreateRequest taskDto){
+        Todo entity = todoMapper.toEntity(taskDto);
+        Todo saved = todoRepository.save(entity);
+        return todoMapper.toResponse(saved);
     }
 
     @Override
-    public List<TodoDto> getList(){
+    public List<TodoResponse> getList(){
         return todoRepository.findAll()
                 .stream()
-                .map(todoMapper::toDto)
+                .map(todoMapper::toResponse)
                 .toList();
     }
 
     @Override
-    public void delete(Long id){
-        todoRepository.deleteById(String.valueOf(id));
+    public void deleteById(Long id){
+        todoRepository.deleteById(id);
     }
 }

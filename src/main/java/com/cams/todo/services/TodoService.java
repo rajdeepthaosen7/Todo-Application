@@ -1,11 +1,12 @@
 package com.cams.todo.services;
 
-import com.cams.todo.dtos.TodoDto;
+import com.cams.todo.dtos.TodoCreateRequest;
+import com.cams.todo.dtos.TodoResponse;
 
 import java.util.List;
 
 public interface TodoService {
-    TodoDto createTask(TodoDto dto);
-    List<TodoDto> getList();
-    void delete(Long id);
+    TodoResponse createTodo(TodoCreateRequest dto);
+    List<TodoResponse> getList();
+    void deleteById(Long id);
 }
