@@ -13,6 +13,7 @@ public interface TodoMapper {
     @Mapping(target = "status", constant = "PENDING")
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "priority", ignore = true)
     Todo toEntity(TodoCreateRequest dto);
 
     TodoResponse toResponse(Todo entity);
