@@ -4,12 +4,12 @@ import com.cams.todo.dtos.TodoCreateRequest;
 import com.cams.todo.dtos.TodoResponse;
 import com.cams.todo.dtos.TodoUpdateRequest;
 import com.cams.todo.entities.Todo;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 
-@Mapper(componentModel = "spring")
+@Mapper(
+        componentModel = "spring",
+        unmappedTargetPolicy = ReportingPolicy.IGNORE
+)
 public interface TodoMapper {
 
     // CREATE
@@ -18,7 +18,7 @@ public interface TodoMapper {
     // RESPONSE
     TodoResponse toResponse(Todo entity);
 
-    // PATCH (partial update)
+    // PATCH
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntityFromDto(TodoUpdateRequest dto, @MappingTarget Todo entity);
 }
