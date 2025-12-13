@@ -2,6 +2,7 @@ package com.cams.todo.services.impl;
 
 import com.cams.todo.dtos.TodoCreateRequest;
 import com.cams.todo.dtos.TodoResponse;
+import com.cams.todo.dtos.TodoUpdateRequest;
 import com.cams.todo.entities.Todo;
 import com.cams.todo.mappers.TodoMapper;
 import com.cams.todo.repositories.TodoRepository;
@@ -36,5 +37,14 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public void deleteById(Long id){
         todoRepository.deleteById(id);
+    }
+
+    @Override
+    public TodoResponse updateTodo(Long id, TodoUpdateRequest dto) {
+        Todo entity = todoRepository.findById(id).
+                orElseThrow(() -> new RuntimeException("Todo not found with id: " + id));
+        todoMapper.updateEntityFromDto(dto, entity);
+        Todo saved = todoRepository.save(entity);
+        return todoMapper.toResponse(saved);
     }
 }
