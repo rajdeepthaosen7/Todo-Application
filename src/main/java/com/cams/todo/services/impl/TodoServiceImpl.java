@@ -8,6 +8,8 @@ import com.cams.todo.mappers.TodoMapper;
 import com.cams.todo.repositories.TodoRepository;
 import com.cams.todo.services.TodoService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,12 +28,10 @@ public class TodoServiceImpl implements TodoService {
         return todoMapper.toResponse(saved);
     }
 
-    @Override
-    public List<TodoResponse> getList(){
-        return todoRepository.findAll()
-                .stream()
-                .map(todoMapper::toResponse)
-                .toList();
+    public Page<TodoResponse> getTodos(Pageable pageable){
+        return todoRepository
+                .findAll(pageable)
+                .map(todoMapper::toResponse);
     }
 
     @Override
