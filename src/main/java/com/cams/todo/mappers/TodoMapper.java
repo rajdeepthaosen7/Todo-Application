@@ -6,19 +6,17 @@ import com.cams.todo.dtos.TodoUpdateRequest;
 import com.cams.todo.entities.Todo;
 import org.mapstruct.*;
 
-@Mapper(
-        componentModel = "spring",
-        unmappedTargetPolicy = ReportingPolicy.IGNORE
-)
+@Mapper(componentModel = "spring")
 public interface TodoMapper {
 
-    // CREATE
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "status", constant = "PENDING")
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     Todo toEntity(TodoCreateRequest dto);
 
-    // RESPONSE
     TodoResponse toResponse(Todo entity);
 
-    // PATCH
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntityFromDto(TodoUpdateRequest dto, @MappingTarget Todo entity);
 }

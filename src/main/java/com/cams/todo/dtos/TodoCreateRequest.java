@@ -8,11 +8,12 @@ import java.time.LocalDate;
 public record TodoCreateRequest(
 
         @NotBlank(message = "Title is required")
-        @Size(max = 100)
+        @Size(min = 1, max = 100)
         String title,
 
         @Size(max = 255)
         String description,
+
 
         LocalDate dueDate){
 }
