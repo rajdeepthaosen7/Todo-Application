@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,26 +19,28 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-public class TodoEntity {
+@EntityListeners(AuditingEntityListener.class)
+public class Todo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "serial_no")
-    Long id;
+    private Long id;
 
     @Column(name = "title", nullable = false, length = 255)
-    String title;
+    private String title;
 
-    @Column(name = "description", nullable = true)
+    @Column(name = "description")
     String description;
 
     @Column(name = "due_date")
     LocalDate dueDate;
 
     @Column(name = "created_at")
+    @CreatedDate
     LocalDateTime createdAt;
 
     @Column(name = "updated_at")
+    @LastModifiedDate
     LocalDateTime updatedAt;
 
     @Column(name = "priority")
